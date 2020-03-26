@@ -121,7 +121,7 @@ function Form (props){
                     onChange = {inputChange}
                 />
             </label><br/>
-            <button disabled = {buttonDisabled}>Submit</button>
+            <button disabled = {buttonDisabled} name='buttonName'>Submit</button>
         </form>
     );
 }
