@@ -9,7 +9,7 @@ const formSchema = yup.object().shape({
     terms: yup.boolean().oneOf([true], "Please agree to terms of use"),
 })
 
-function Form (){
+function Form (props){
     const [formValue, setFormValue] = useState ({
         name: '',
         email: '',
@@ -54,8 +54,6 @@ function Form (){
           .post("https://reqres.in/api/users", formValue)
           .then(res => {
             setPost(res.data);
-            console.log("success", post);
-    
             setFormValue({
               name: '',
               email: '',
@@ -66,6 +64,13 @@ function Form (){
           .catch(err => {
             console.log(err.res);
           });
+        const newUser = {
+            name: formValue.name,
+            email: formValue.email,
+            password: formValue.password,
+            terms: formValue.terms
+        }
+        props.setUsers([...props.users, newUser]);
     }
     const inputChange = event => {
         event.persist();
@@ -75,9 +80,6 @@ function Form (){
         validateChange(event);
         setFormValue(newFormData);
     }
-
-
-    console.log(formValue);
     return(
         <form onSubmit = {formSubmit}>
             <label htmlFor='name'>Name
@@ -119,7 +121,6 @@ function Form (){
                     onChange = {inputChange}
                 />
             </label><br/>
-            <pre>{JSON.stringify(post, null, 2)}</pre>
             <button disabled = {buttonDisabled}>Submit</button>
         </form>
     );
