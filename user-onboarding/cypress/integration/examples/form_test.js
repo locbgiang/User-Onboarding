@@ -17,6 +17,18 @@ describe('Testing form', () => {
             .should('be.checked');
         cy.get('button[name="buttonName"]')
             .click();
-
+    })
+    it('displays errors on login',() => {
+        cy.get('input[name="name"]')
+            .type("@#!")
+            .should("not.have.value", "");
+        cy.get('input[name="email"')
+            .type('email@email.com')
+            .should("not.have.value", "");
+        cy.get('input[name=password]')
+            .type("asdf432423")
+            .should("not.have.value", '');
+        cy.get('input[name="terms"]')
+            .should('not.be.checked');
     })
 });
